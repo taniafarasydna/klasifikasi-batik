@@ -66,22 +66,18 @@ def overview_page():
 
         <b>Sumber</b><br>
         Kaggle (2021)
-
         <br><br>
 
         <b>Jumlah Citra</b><br>
         1.350 gambar
-
         <br><br>
 
         <b>Jumlah Kelas</b><br>
         15 motif batik
-
         <br><br>
 
         <b>Ukuran Citra</b><br>
         224 × 224 piksel
-
         </div>
         """, unsafe_allow_html=True)
 
@@ -94,12 +90,10 @@ def overview_page():
 
         <b>Sumber</b><br>
         Dokumentasi Penelitian
-
         <br><br>
 
         <b>Lokasi</b><br>
         Museum Batik TMII
-
         <br><br>
 
         <b>Jumlah Citra</b><br>
@@ -109,7 +103,6 @@ def overview_page():
 
         <b>Tahun Pengambilan</b><br>
         2026
-
         </div>
         """, unsafe_allow_html=True)
 
