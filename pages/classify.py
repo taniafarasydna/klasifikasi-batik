@@ -3,7 +3,6 @@ import streamlit as st
 from PIL import Image
 
 from utils.styles import load_css
-
 from utils.components import (
     header,
     footer,
@@ -14,7 +13,6 @@ from utils.components import (
 )
 
 from utils.model_loader import load_models
-
 from utils.predictor import (
     predict_image,
     get_prediction_result
@@ -44,25 +42,20 @@ model_v2, model_v3 = load_models()
 # ==========================================================
 
 def classify_page():
-
     header()
-
     section_title(
         "Klasifikasi Citra",
         "Unggah citra batik untuk dibandingkan menggunakan model MobileNetV2 dan MobileNetV3."
     )
-
+    
     uploaded_file = st.file_uploader(
-        "📂 Unggah Gambar Batik",
+        "Unggah Gambar Batik",
         type=["jpg", "jpeg", "png"]
     )
 
     if uploaded_file is None:
-
         st.info(
-            "Silakan unggah citra batik terlebih dahulu untuk memulai proses klasifikasi."
-        )
-
+            "Silakan unggah citra batik terlebih dahulu untuk memulai proses klasifikasi.")
         footer()
         return
 
@@ -75,18 +68,14 @@ def classify_page():
     col1, col2 = st.columns([1, 2])
 
     with col1:
-
-        st.markdown("### 🖼 Preview Citra")
-
+        st.markdown("### Preview Citra")
         st.image(
             image,
             use_container_width=True
         )
-
         st.caption(
             f"**Nama File:** {uploaded_file.name}"
         )
-
         st.write(
             f"**Ukuran:** {image.size[0]} × {image.size[1]} piksel"
         )
@@ -96,7 +85,6 @@ def classify_page():
     # ======================================================
 
     with st.spinner("🔍 Sedang menganalisis motif batik..."):
-
         pred_v2, pred_v3 = predict_image(
             image,
             model_v2,
@@ -107,20 +95,16 @@ def classify_page():
         pred_v2,
         class_names
     )
-
     result_v3 = get_prediction_result(
         pred_v3,
         class_names
     )
 
     with col2:
-
-        st.markdown("### 🤖 Hasil Klasifikasi")
-
+        st.markdown("### Hasil Klasifikasi")
         left_card, right_card = st.columns(2)
-
+        
         with left_card:
-
             prediction_card(
                 "MobileNetV2",
                 result_v2["label"],
@@ -130,7 +114,6 @@ def classify_page():
             )
 
         with right_card:
-
             prediction_card(
                 "MobileNetV3",
                 result_v3["label"],
@@ -143,7 +126,6 @@ def classify_page():
     # ======================================================
 
     st.divider()
-
     prediction_summary(
         result_v2,
         result_v3
@@ -156,25 +138,20 @@ def classify_page():
     st.markdown("## 🏆 Model dengan Confidence Tertinggi")
 
     if result_v2["confidence"] > result_v3["confidence"]:
-
         st.success(
             f"""
 **MobileNetV2** memberikan tingkat keyakinan tertinggi
 dengan confidence **{result_v2['confidence']:.2f}%**.
 """
         )
-
     elif result_v3["confidence"] > result_v2["confidence"]:
-
         st.success(
             f"""
 **MobileNetV3** memberikan tingkat keyakinan tertinggi
 dengan confidence **{result_v3['confidence']:.2f}%**.
 """
         )
-
     else:
-
         st.info(
             f"""
 Kedua model memiliki confidence yang sama,
@@ -189,9 +166,7 @@ yaitu **{result_v2['confidence']:.2f}%**.
     automatic_conclusion(
 
         result_v2["label"],
-
         result_v3["label"]
-
     )
 
     # ======================================================
@@ -199,7 +174,6 @@ yaitu **{result_v2['confidence']:.2f}%**.
     # ======================================================
 
     st.markdown("## 💡 Tips Penggunaan")
-
     st.info(
         """
 Agar hasil klasifikasi lebih optimal, perhatikan beberapa hal berikut:
