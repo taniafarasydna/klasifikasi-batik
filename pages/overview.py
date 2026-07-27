@@ -94,8 +94,8 @@ def overview_page():
             <p><b>Sumber</b><br>
             Kaggle (2021)</p>
 
-            <p><b>Jumlah Citra</b><br>
-            1.350 gambar</p>
+            <b>Jumlah Citra</b><br>
+            1.350 gambar
 
             <p><b>Jumlah Kelas</b><br>
             15 motif batik Indonesia</p>
