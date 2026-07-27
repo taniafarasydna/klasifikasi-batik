@@ -1,298 +1,201 @@
-# ==========================================================
-# IMPORT LIBRARY
-# ==========================================================
-
+dari kode yg aku gunakan ini:
 import os
 from PIL import Image
 import streamlit as st
 
 from utils.components import (
-    header,
-    footer,
-    section_title,
-    dataset_summary,
-    motif_table
+    header,
+    footer,
+    section_title,
+    dataset_summary,
+    motif_table
 )
 
-
 # ==========================================================
-# DATASET PATH
+# PATH
 # ==========================================================
 
-TRAIN_PATH = "data/DATASET/DATASET/TRAIN"
-TEST_PATH = "data/DATASET/DATASET/TEST"
-PRIMARY_PATH = "data/DATASET_PRIMER"
+SAMPLE_PATH = "assets/sample_dataset"
+PRIMARY_PATH = "assets/primer"
 
 
 # ==========================================================
-# COUNT IMAGE
-# ==========================================================
-
-def count_images(folder_path):
-
-    total = 0
-
-    if not os.path.exists(folder_path):
-        return 0
-
-    for root, _, files in os.walk(folder_path):
-
-        total += len([
-            f for f in files
-            if f.lower().endswith(
-                (".jpg", ".jpeg", ".png")
-            )
-        ])
-
-    return total
-
-
-# ==========================================================
-# OVERVIEW PAGE
+# DATA OVERVIEW PAGE
 # ==========================================================
 
 def overview_page():
 
-    header()
+    header()
 
-    section_title(
-        "Data Overview",
-        "Informasi dataset yang digunakan dalam penelitian."
-    )
+    section_title(
+        "Data Overview",
+        "Informasi dataset yang digunakan dalam penelitian."
+    )
 
-    train_count = count_images(TRAIN_PATH)
-    test_count = count_images(TEST_PATH)
-    primary_count = count_images(PRIMARY_PATH)
+    # ======================================================
+    # DATASET SUMMARY
+    # ======================================================
 
-    total_count = train_count + test_count + primary_count
+    total_count = 1370
+    train_count = 1050
+    test_count = 300
+    primary_count = 20
 
-    dataset_summary(
-        total_count,
-        15,
-        train_count,
-        test_count
-    )
+    dataset_summary(
+        total_count,
+        15,
+        train_count,
+        test_count
+    )
 
-    st.write("")
+    st.write("")
 
-    # ======================================================
-    # DATASET INFORMATION
-    # ======================================================
+    # ======================================================
+    # DATASET INFORMATION
+    # ======================================================
 
-    st.markdown("## 📚 Dataset Penelitian")
+    st.markdown("## 📚 Dataset Penelitian")
 
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-    with col1:
-        st.markdown("""
-        <div class="card">
-            <h4 style="margin-top: 0; margin-bottom: 8px;">Dataset Sekunder</h4>
-            
-            <p style="margin-bottom: 8px; line-height: 1.2;">
-                <b>Sumber</b><br>Kaggle (2021)
-            </p>
-            
-            <p style="margin-bottom: 8px; line-height: 1.2;">
-                <b>Jumlah Citra</b><br>1.350 gambar
-            </p>
-            
-            <p style="margin-bottom: 8px; line-height: 1.2;">
-                <b>Jumlah Kelas</b><br>15 motif batik
-            </p>
-            
-            <p style="margin-bottom: 0px; line-height: 1.2;">
-                <b>Ukuran Citra</b><br>224 × 224 piksel
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+    with col1:
 
-    with col2:
-        st.markdown(f"""
-        <div class="card">
-            <h4 style="margin-top: 0; margin-bottom: 8px;">Dataset Primer</h4>
-            
-            <p style="margin-bottom: 8px; line-height: 1.2;">
-                <b>Sumber</b><br>Dokumentasi Penelitian
-            </p>
-            
-            <p style="margin-bottom: 8px; line-height: 1.2;">
-                <b>Lokasi</b><br>Museum Batik TMII
-            </p>
-            
-            <p style="margin-bottom: 8px; line-height: 1.2;">
-                <b>Jumlah Citra</b><br>{primary_count} gambar
-            </p>
-            
-            <p style="margin-bottom: 0px; line-height: 1.2;">
-                <b>Tahun Pengambilan</b><br>2026
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""
+        <div class="card">
 
-    st.divider()
+        <h4>Dataset Sekunder</h4>
 
-    # ==========================================================
-    # DATASET SEKUNDER GALLERY
-    # ==========================================================
+        <b>Sumber</b><br>
+        Kaggle (2021)
+        <br>
 
-    st.markdown("## 🖼️ Contoh Dataset Sekunder")
+        <b>Jumlah Citra</b><br>
+        1.350 gambar
+        <br><br>
 
-    st.write(
-        """
-        Berikut merupakan contoh citra pada dataset sekunder 
-        yang digunakan dalam proses pelatihan dan pengujian model.
-        Setiap kelas direpresentasikan oleh satu contoh citra.
-        """
-    )
+        <b>Jumlah Kelas</b><br>
+        15 motif batik
+        <br><br>
 
-    if os.path.exists(TRAIN_PATH):
+        <b>Ukuran Citra</b><br>
+        224 × 224 piksel
+        </div>
+        """, unsafe_allow_html=True)
 
-        class_folders = sorted([
-            folder
-            for folder in os.listdir(TRAIN_PATH)
-            if os.path.isdir(
-                os.path.join(
-                    TRAIN_PATH,
-                    folder
-                )
-            )
-        ])
+    with col2:
 
-        cols = st.columns(5)
+        st.markdown(f"""
+        <div class="card">
 
-        for i, folder in enumerate(class_folders):
+        <h4>Dataset Primer</h4>
 
-            folder_path = os.path.join(
-                TRAIN_PATH,
-                folder
-            )
+        <b>Sumber</b><br>
+        Dokumentasi Penelitian
+        <br><br>
 
-            images = sorted([
-                img
-                for img in os.listdir(folder_path)
-                if img.lower().endswith(
-                    (
-                        ".jpg",
-                        ".jpeg",
-                        ".png"
-                    )
-                )
-            ])
+        <b>Lokasi</b><br>
+        Museum Batik TMII
+        <br><br>
 
-            if len(images) > 0:
+        <b>Jumlah Citra</b><br>
+        {primary_count} gambar
 
-                img_path = os.path.join(
-                    folder_path,
-                    images[0]
-                )
+        <br><br>
 
-                image = Image.open(
-                    img_path
-                )
+        <b>Tahun Pengambilan</b><br>
+        2026
+        </div>
+        """, unsafe_allow_html=True)
 
-                with cols[i % 5]:
+    # ======================================================
+    # CONTOH DATASET SEKUNDER
+    # ======================================================
 
-                    st.image(
-                        image,
-                        use_container_width=True
-                    )
+    st.markdown("## 🖼 Contoh Dataset Sekunder")
 
-                    st.caption(
-                        folder
-                    )
+    st.write(
+        "Berikut merupakan contoh citra dari masing-masing kelas motif batik "
+        "yang digunakan sebagai dataset sekunder dalam penelitian."
+    )
 
-    else:
+    if os.path.exists(SAMPLE_PATH):
 
-        st.warning(
-            "Dataset sekunder tidak ditemukan."
-        )
+        images = sorted([
+            img for img in os.listdir(SAMPLE_PATH)
+            if img.lower().endswith((".jpg", ".jpeg", ".png"))
+        ])
 
-    # ==========================================================
-    # DATASET PRIMER GALLERY
-    # ==========================================================
+        cols = st.columns(5)
 
-    st.markdown("## 📷 Dataset Primer")
+        for i, img_name in enumerate(images):
 
-    st.write(
-        """
-        Dataset primer merupakan citra batik yang diperoleh melalui
-        dokumentasi langsung di Museum Batik TMII.
-        Dataset ini digunakan sebagai data validasi untuk menguji
-        kemampuan generalisasi model terhadap citra dunia nyata.
-        """
-    )
+            image = Image.open(
+                os.path.join(SAMPLE_PATH, img_name)
+            )
 
-    if os.path.exists(PRIMARY_PATH):
+            with cols[i % 5]:
 
-        primary_images = sorted([
-            img
-            for img in os.listdir(PRIMARY_PATH)
-            if img.lower().endswith(
-                (
-                    ".jpg",
-                    ".jpeg",
-                    ".png"
-                )
-            )
-        ])
+                st.image(
+                    image,
+                    use_container_width=True
+                )
 
-        if len(primary_images) > 0:
+                st.caption(
+                    os.path.splitext(img_name)[0]
+                )
 
-            cols = st.columns(5)
+    else:
 
-            for i, img_name in enumerate(primary_images):
+        st.warning("Folder sample_dataset tidak ditemukan.")
 
-                img_path = os.path.join(
-                    PRIMARY_PATH,
-                    img_name
-                )
+    # ======================================================
+    # DATASET PRIMER
+    # ======================================================
 
-                image = Image.open(
-                    img_path
-                )
+    st.markdown("## 📷 Dataset Primer")
 
-                with cols[i % 5]:
+    st.write(
+        "Berikut merupakan citra primer yang diperoleh melalui pengambilan "
+        "gambar secara langsung di Museum Batik TMII."
+    )
 
-                    st.image(
-                        image,
-                        use_container_width=True
-                    )
+    if os.path.exists(PRIMARY_PATH):
 
-                    st.caption(
-                        img_name
-                    )
+        images = sorted([
+            img for img in os.listdir(PRIMARY_PATH)
+            if img.lower().endswith((".jpg", ".jpeg", ".png"))
+        ])
 
-        else:
+        cols = st.columns(4)
 
-            st.info(
-                "Dataset primer belum memiliki gambar."
-            )
+        for i, img_name in enumerate(images):
 
-    else:
+            img = Image.open(
+                os.path.join(PRIMARY_PATH, img_name)
+            )
 
-        st.warning(
-            "Folder dataset primer tidak ditemukan."
-        )
+            with cols[i % 4]:
 
-    # ==========================================================
-    # MOTIF BATIK
-    # ==========================================================
+                st.image(
+                    img,
+                    use_container_width=True
+                )
 
-    st.markdown(
-        "## 📋 Daftar Kelas Motif Batik"
-    )
+                st.caption(f"Citra Primer {i+1}")
 
-    st.write(
-        """
-        Dataset yang digunakan terdiri atas 15 kelas motif batik
-        Indonesia yang menjadi target klasifikasi model.
-        """
-    )
+    else:
 
-    motif_table()
+        st.warning("Folder primer tidak ditemukan.")
 
-    # ==========================================================
-    # FOOTER
-    # ==========================================================
+    # ======================================================
+    # DAFTAR MOTIF BATIK
+    # ======================================================
 
-    footer()
+    st.markdown("## 📋 Daftar Motif Batik")
+
+    motif_table()
+
+    st.write("")
+
+    footer()
+bagaimana cara agra jarak tiap baris tidak terlalu jauh?
