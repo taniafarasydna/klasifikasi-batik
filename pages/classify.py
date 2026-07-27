@@ -9,7 +9,8 @@ from utils.components import (
     footer,
     section_title,
     prediction_card,
-    automatic_conclusion
+    automatic_conclusion,
+    prediction_summary
 )
 
 from utils.model_loader import load_models
@@ -38,9 +39,8 @@ with open("assets/class_names.json", "r") as f:
 
 model_v2, model_v3 = load_models()
 
-
 # ==========================================================
-# PAGE
+# CLASSIFICATION PAGE
 # ==========================================================
 
 def classify_page():
@@ -49,32 +49,32 @@ def classify_page():
 
     section_title(
         "Klasifikasi Citra",
-        "Unggah citra motif batik untuk dilakukan proses klasifikasi menggunakan MobileNetV2 dan MobileNetV3."
+        "Unggah citra batik untuk dibandingkan menggunakan model MobileNetV2 dan MobileNetV3."
     )
 
-    st.markdown("### 📤 Upload Citra")
-
     uploaded_file = st.file_uploader(
-        "Upload",
-        type=["jpg", "jpeg", "png"],
-        label_visibility="collapsed"
+        "📂 Unggah Gambar Batik",
+        type=["jpg", "jpeg", "png"]
     )
 
     if uploaded_file is None:
 
-        st.info("Silakan unggah citra batik terlebih dahulu.")
+        st.info(
+            "Silakan unggah citra batik terlebih dahulu untuk memulai proses klasifikasi."
+        )
 
         footer()
-
         return
 
     image = Image.open(uploaded_file)
 
-    st.divider()
+    # ======================================================
+    # PREVIEW
+    # ======================================================
 
-    left, right = st.columns([1, 1.4])
+    col1, col2 = st.columns([1, 2])
 
-    with left:
+    with col1:
 
         st.markdown("### 🖼 Preview Citra")
 
@@ -83,7 +83,19 @@ def classify_page():
             use_container_width=True
         )
 
-    with st.spinner("Sedang melakukan klasifikasi..."):
+        st.caption(
+            f"**Nama File:** {uploaded_file.name}"
+        )
+
+        st.write(
+            f"**Ukuran:** {image.size[0]} × {image.size[1]} piksel"
+        )
+
+    # ======================================================
+    # PREDICTION
+    # ======================================================
+
+    with st.spinner("🔍 Sedang menganalisis motif batik..."):
 
         pred_v2, pred_v3 = predict_image(
             image,
@@ -101,13 +113,13 @@ def classify_page():
         class_names
     )
 
-    with right:
+    with col2:
 
-        st.markdown("### 🤖 Hasil Prediksi")
+        st.markdown("### 🤖 Hasil Klasifikasi")
 
-        c1, c2 = st.columns(2)
+        left_card, right_card = st.columns(2)
 
-        with c1:
+        with left_card:
 
             prediction_card(
                 "MobileNetV2",
@@ -117,7 +129,7 @@ def classify_page():
                 class_names
             )
 
-        with c2:
+        with right_card:
 
             prediction_card(
                 "MobileNetV3",
@@ -126,46 +138,82 @@ def classify_page():
                 pred_v3,
                 class_names
             )
+    # ======================================================
+    # RINGKASAN PREDIKSI
+    # ======================================================
 
     st.divider()
 
-    st.markdown("## 📊 Ringkasan Prediksi")
-
-    summary = {
-        "Model": [
-            "MobileNetV2",
-            "MobileNetV3"
-        ],
-        "Prediksi": [
-            result_v2["label"],
-            result_v3["label"]
-        ],
-        "Confidence (%)": [
-            f"{result_v2['confidence']:.2f}",
-            f"{result_v3['confidence']:.2f}"
-        ]
-    }
-
-    st.dataframe(
-        summary,
-        use_container_width=True,
-        hide_index=True
+    prediction_summary(
+        result_v2,
+        result_v3
     )
+
+    # ======================================================
+    # MODEL DENGAN CONFIDENCE TERTINGGI
+    # ======================================================
+
+    st.markdown("## 🏆 Model dengan Confidence Tertinggi")
+
+    if result_v2["confidence"] > result_v3["confidence"]:
+
+        st.success(
+            f"""
+**MobileNetV2** memberikan tingkat keyakinan tertinggi
+dengan confidence **{result_v2['confidence']:.2f}%**.
+"""
+        )
+
+    elif result_v3["confidence"] > result_v2["confidence"]:
+
+        st.success(
+            f"""
+**MobileNetV3** memberikan tingkat keyakinan tertinggi
+dengan confidence **{result_v3['confidence']:.2f}%**.
+"""
+        )
+
+    else:
+
+        st.info(
+            f"""
+Kedua model memiliki confidence yang sama,
+yaitu **{result_v2['confidence']:.2f}%**.
+"""
+        )
+
+    # ======================================================
+    # KESIMPULAN
+    # ======================================================
 
     automatic_conclusion(
+
         result_v2["label"],
+
         result_v3["label"]
+
     )
+
+    # ======================================================
+    # TIPS PENGGUNAAN
+    # ======================================================
+
+    st.markdown("## 💡 Tips Penggunaan")
 
     st.info(
         """
-💡 **Tips Penggunaan**
+Agar hasil klasifikasi lebih optimal, perhatikan beberapa hal berikut:
 
-- Gunakan citra motif batik yang jelas.
-- Hindari gambar yang buram.
-- Pastikan pencahayaan cukup.
-- Format gambar yang didukung: JPG, JPEG, dan PNG.
+- Gunakan gambar dengan pencahayaan yang baik.
+- Pastikan motif batik terlihat jelas.
+- Hindari gambar yang buram atau terpotong.
+- Gunakan format JPG, JPEG, atau PNG.
+- Sistem akan otomatis mengubah ukuran citra menjadi **224 × 224 piksel** sebelum proses klasifikasi.
 """
     )
+
+    # ======================================================
+    # FOOTER
+    # ======================================================
 
     footer()
