@@ -91,16 +91,16 @@ def overview_page():
 
             <h3>Dataset Sekunder</h3>
 
-            <p><b>Sumber</b><br>
+            <p><b>Sumber</b>
             Kaggle (2021)</p>
 
-            <b>Jumlah Citra</b><br>
+            <b>Jumlah Citra</b>
             1.350 gambar
 
-            <p><b>Jumlah Kelas</b><br>
+            <p><b>Jumlah Kelas</b>
             15 motif batik Indonesia</p>
 
-            <p><b>Ukuran Citra</b><br>
+            <p><b>Ukuran Citra</b>
             224 × 224 piksel</p>
 
             </div>
