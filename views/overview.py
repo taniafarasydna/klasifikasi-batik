@@ -60,13 +60,16 @@ def overview_page():
         st.markdown("""
         <div class="card">
         <h4>Dataset Sekunder</h4>
-        <b>Sumber</b>
+        <b>Sumber</b><br>
         Kaggle (2021)
-        <b>Jumlah Citra</b>
+        <br>
+        <b>Jumlah Citra</b><br>
         1.350 gambar
-        <b>Jumlah Kelas</b>
+        <br>
+        <b>Jumlah Kelas</b><br>
         15 motif batik
-        <b>Ukuran Citra</b>
+        <br>
+        <b>Ukuran Citra</b><br>
         224 × 224 piksel
         </div>
         """, 
@@ -76,13 +79,16 @@ def overview_page():
         st.markdown(f"""
         <div class="card">
         <h4>Dataset Primer</h4>
-        <b>Sumber</b>
+        <b>Sumber</b><br>
         Dokumentasi Penelitian
-        <b>Lokasi</b>
+        <br>
+        <b>Lokasi</b><br>
         Museum Batik TMII
-        <b>Jumlah Citra</b>
+        <br>
+        <b>Jumlah Citra</b><br>
         {primary_count} gambar
-        <b>Tahun Pengambilan</b>
+        <br>
+        <b>Tahun Pengambilan</b><br>
         2026
         </div>
         """, 
@@ -146,7 +152,8 @@ def overview_page():
                     img,
                     use_container_width=True
                 )
-                st.caption(f"Citra Primer {i+1}")
+                motif = os.path.splitext(img_name)[0].replace("_", " ")
+                st.caption(motif)
     else:
         st.warning("Folder primer tidak ditemukan.")
 
