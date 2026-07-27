@@ -79,7 +79,7 @@ def overview_page():
     # DATASET INFORMATION
     # ======================================================
 
-    st.markdown("## 📚 Dataset Penelitian")
+    st.markdown("Dataset Penelitian")
 
     col1, col2 = st.columns(2)
 
