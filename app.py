@@ -1,3 +1,7 @@
+# ==========================================================
+# IMPORT LIBRARY
+# ==========================================================
+
 import streamlit as st
 from streamlit_option_menu import option_menu
 
@@ -6,8 +10,9 @@ from utils.styles import load_css
 from pages.overview import overview_page
 from pages.classify import classify_page
 
+
 # ==========================================================
-# PAGE CONFIG
+# PAGE CONFIGURATION
 # ==========================================================
 
 st.set_page_config(
@@ -17,11 +22,13 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
 # ==========================================================
 # LOAD CSS
 # ==========================================================
 
 load_css()
+
 
 # ==========================================================
 # SIDEBAR
@@ -31,30 +38,24 @@ with st.sidebar:
 
     st.markdown(
         """
-        <div style="text-align:center;padding-top:10px;">
+        <div style="text-align:center; padding:10px 0 20px 0;">
+            <h2 style="margin-bottom:5px;color:#6F4E37;">
+                🧵 Batik Classifier
+            </h2>
 
-        <h2 style="
-        color:#6F4E37;
-        margin-bottom:5px;
-        ">
-        🧵 BATIK CLASSIFIER
-        </h2>
-
-        <p style="
-        color:#8B6B4A;
-        font-size:14px;
-        ">
-        Transfer Learning
-        <br>
-        MobileNetV2 & MobileNetV3
-        </p>
-
+            <p style="
+                color:#777;
+                font-size:14px;
+                margin-top:0;
+            ">
+                Transfer Learning
+                <br>
+                MobileNetV2 & MobileNetV3
+            </p>
         </div>
         """,
         unsafe_allow_html=True
     )
-
-    st.markdown("<br>", unsafe_allow_html=True)
 
     selected = option_menu(
 
@@ -74,45 +75,45 @@ with st.sidebar:
 
         styles={
 
-            "container":{
+            "container": {
 
-                "padding":"8px",
+                "padding": "8px",
 
-                "background-color":"#EFE2D4",
+                "background-color": "#EFE2D4",
 
-                "border-radius":"15px"
-
-            },
-
-            "icon":{
-
-                "color":"#8B6B4A",
-
-                "font-size":"20px"
+                "border-radius": "15px"
 
             },
 
-            "nav-link":{
+            "icon": {
 
-                "font-size":"17px",
+                "color": "#8B6B4A",
 
-                "text-align":"left",
-
-                "padding":"12px",
-
-                "margin":"6px",
-
-                "border-radius":"10px",
-
-                "--hover-color":"#D7B899"
+                "font-size": "18px"
 
             },
 
-            "nav-link-selected":{
+            "nav-link": {
 
-                "background-color":"#8B6B4A",
+                "font-size": "16px",
 
-                "color":"white"
+                "text-align": "left",
+
+                "margin": "6px",
+
+                "--hover-color": "#D7B899",
+
+                "border-radius": "10px",
+
+            },
+
+            "nav-link-selected": {
+
+                "background-color": "#8B6B4A",
+
+                "color": "white",
+
+                "font-weight": "600",
 
             }
 
@@ -120,31 +121,23 @@ with st.sidebar:
 
     )
 
-    st.markdown("<br>", unsafe_allow_html=True)
-
     st.markdown("---")
 
     st.markdown(
         """
-        <div style="text-align:center">
-
-        <span style="font-size:13px;color:#6F4E37;">
-        © 2026
-        </span>
-
-        <br>
-
-        <b style="color:#6F4E37;">
-        Tania Fara Sayyidina
-        </b>
-
+        <div style="text-align:center; font-size:13px; color:#666;">
+            <b>Final Project</b><br>
+            Informatika - Data Science
+            <br><br>
+            Universitas Bhayangkara Jakarta Raya
         </div>
         """,
         unsafe_allow_html=True
     )
 
+
 # ==========================================================
-# ROUTING
+# MAIN PAGE
 # ==========================================================
 
 if selected == "Data Overview":
