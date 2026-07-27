@@ -29,8 +29,7 @@ load_css()
 # LOAD CLASS NAME
 # ==========================================================
 
-with open("assets/class_names.json","r") as f:
-
+with open("assets/class_names.json", "r") as f:
     class_names = json.load(f)
 
 # ==========================================================
@@ -38,8 +37,10 @@ with open("assets/class_names.json","r") as f:
 # ==========================================================
 
 model_v2, model_v3 = load_models()
+
+
 # ==========================================================
-# CLASSIFICATION PAGE
+# PAGE
 # ==========================================================
 
 def classify_page():
@@ -47,129 +48,124 @@ def classify_page():
     header()
 
     section_title(
-
         "Klasifikasi Citra",
-
-        "Unggah citra batik untuk dilakukan proses klasifikasi."
-
+        "Unggah citra motif batik untuk dilakukan proses klasifikasi menggunakan MobileNetV2 dan MobileNetV3."
     )
 
+    st.markdown("### 📤 Upload Citra")
+
     uploaded_file = st.file_uploader(
-
-        "Upload gambar",
-
-        type=["jpg","jpeg","png"]
-
+        "Upload",
+        type=["jpg", "jpeg", "png"],
+        label_visibility="collapsed"
     )
 
     if uploaded_file is None:
 
-        st.info(
-
-            "Silakan upload citra batik terlebih dahulu."
-
-        )
+        st.info("Silakan unggah citra batik terlebih dahulu.")
 
         footer()
 
         return
+
     image = Image.open(uploaded_file)
 
-    st.markdown("### Preview Gambar")
+    st.divider()
 
-    st.image(
+    left, right = st.columns([1, 1.4])
 
-        image,
+    with left:
 
-        use_container_width=True
+        st.markdown("### 🖼 Preview Citra")
 
-    )
+        st.image(
+            image,
+            use_container_width=True
+        )
 
-    with st.spinner(
-
-        "Sedang melakukan klasifikasi..."
-
-    ):
+    with st.spinner("Sedang melakukan klasifikasi..."):
 
         pred_v2, pred_v3 = predict_image(
-
             image,
-
             model_v2,
-
             model_v3
-
         )
 
     result_v2 = get_prediction_result(
-
         pred_v2,
-
         class_names
-
     )
 
     result_v3 = get_prediction_result(
-
         pred_v3,
-
         class_names
-
     )
-    st.divider()
 
-    col1,col2 = st.columns(2)
+    with right:
 
-    with col1:
+        st.markdown("### 🤖 Hasil Prediksi")
 
-        prediction_card(
+        c1, c2 = st.columns(2)
 
-            "MobileNetV2",
+        with c1:
 
-            result_v2["label"],
+            prediction_card(
+                "MobileNetV2",
+                result_v2["label"],
+                result_v2["confidence"],
+                pred_v2,
+                class_names
+            )
 
-            result_v2["confidence"],
+        with c2:
 
-            pred_v2,
+            prediction_card(
+                "MobileNetV3",
+                result_v3["label"],
+                result_v3["confidence"],
+                pred_v3,
+                class_names
+            )
 
-            class_names
-
-        )
-
-    with col2:
-
-        prediction_card(
-
-            "MobileNetV3",
-
-            result_v3["label"],
-
-            result_v3["confidence"],
-
-            pred_v3,
-
-            class_names
-
-        )
     st.divider()
 
     st.markdown("## 📊 Ringkasan Prediksi")
 
-    st.markdown(f"""
+    summary = {
+        "Model": [
+            "MobileNetV2",
+            "MobileNetV3"
+        ],
+        "Prediksi": [
+            result_v2["label"],
+            result_v3["label"]
+        ],
+        "Confidence (%)": [
+            f"{result_v2['confidence']:.2f}",
+            f"{result_v3['confidence']:.2f}"
+        ]
+    }
 
-| Model | Hasil Prediksi | Confidence |
-|------|-----------------|-----------|
-| MobileNetV2 | **{result_v2["label"]}** | **{result_v2["confidence"]:.2f}%** |
-| MobileNetV3 | **{result_v3["label"]}** | **{result_v3["confidence"]:.2f}%** |
-
-""")
+    st.dataframe(
+        summary,
+        use_container_width=True,
+        hide_index=True
+    )
 
     automatic_conclusion(
-
         result_v2["label"],
-
         result_v3["label"]
+    )
 
+    st.info(
+        """
+💡 **Tips Penggunaan**
+
+- Gunakan citra motif batik yang jelas.
+- Hindari gambar yang buram.
+- Pastikan pencahayaan cukup.
+- Format gambar yang didukung: JPG, JPEG, dan PNG.
+"""
     )
 
     footer()
