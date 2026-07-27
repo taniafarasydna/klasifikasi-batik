@@ -3,15 +3,6 @@
 # ==========================================================
 
 import streamlit as st
-from streamlit_option_menu import option_menu
-
-from utils.styles import load_css
-from views.overview import overview_page
-from views.classify import classify_page
-
-# ==========================================================
-# PAGE CONFIGURATION
-# ==========================================================
 
 st.set_page_config(
     page_title="Klasifikasi Citra Motif Batik",
@@ -20,6 +11,11 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+from streamlit_option_menu import option_menu
+
+from utils.styles import load_css
+from views.overview import overview_page
+from views.classify import classify_page
 # ==========================================================
 # LOAD CSS
 # ==========================================================
