@@ -135,43 +135,6 @@ def confidence_badge(confidence):
 # ==========================================================
 # TOP 3 PREDICTION
 # ==========================================================
-
-def top3_prediction(prediction, class_names):
-
-    top3 = np.argsort(prediction)[::-1][:3]
-
-    st.markdown("#### 🏅 Top 3 Prediksi")
-
-    for rank, idx in enumerate(top3, start=1):
-
-        confidence = prediction[idx] * 100
-
-        st.markdown(f"""
-        <div class="card"
-        style="
-        margin-bottom:10px;
-        padding:15px;
-        ">
-
-        <b>#{rank}</b>
-
-        <br>
-
-        {class_names[idx]}
-
-        <br>
-
-        <span style="
-        color:#8B6B4A;
-        font-weight:600;
-        ">
-
-        {confidence:.2f}%
-
-        </span>
-
-        </div>
-        """, unsafe_allow_html=True)
 # ==========================================================
 # PREDICTION CARD
 # ==========================================================
@@ -195,17 +158,17 @@ def prediction_card(
 
             <h3 style="
             margin:0;
-            color:#8B6B4A;
+            color:#6F4E37;
             ">
-            🏆 {model_name}
+            🤖 {model_name}
             </h3>
 
             <span style="
             background:#EFE2D4;
-            padding:6px 14px;
-            border-radius:20px;
+            padding:5px 12px;
+            border-radius:15px;
             color:#6F4E37;
-            font-size:13px;
+            font-size:12px;
             font-weight:600;
             ">
             AI Model
@@ -215,46 +178,113 @@ def prediction_card(
 
         <hr>
 
-        <div style="text-align:center;">
+        <p style="
+        text-align:center;
+        color:#777;
+        margin-bottom:5px;
+        ">
+        Hasil Prediksi
+        </p>
 
-            <div style="
-            font-size:15px;
-            color:#777;
-            ">
-            Hasil Prediksi
-            </div>
-
-            <div style="
-            font-size:32px;
-            font-weight:700;
-            color:#3B2A1A;
-            margin-top:10px;
-            ">
-            {label}
-            </div>
-
-        </div>
+        <h2 style="
+        text-align:center;
+        color:#3B2A1A;
+        margin-top:0;
+        margin-bottom:15px;
+        ">
+        {label}
+        </h2>
 
     </div>
     """, unsafe_allow_html=True)
-
-    st.write("")
 
     st.metric(
         "Confidence",
         f"{confidence:.2f}%"
     )
 
-    st.progress(confidence / 100)
+    st.progress(confidence/100)
 
     confidence_badge(confidence)
 
-    st.write("")
+    st.markdown("### 🏅 Top-3 Prediksi")
+# ==========================================================
+# PREDICTION CARD
+# ==========================================================
 
-    top3_prediction(
-        prediction,
-        class_names
+def prediction_card(
+    model_name,
+    label,
+    confidence,
+    prediction,
+    class_names
+):
+
+    st.markdown(f"""
+    <div class="result-card">
+
+        <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        ">
+
+            <h3 style="
+            margin:0;
+            color:#6F4E37;
+            ">
+            🤖 {model_name}
+            </h3>
+
+            <span style="
+            background:#EFE2D4;
+            padding:5px 12px;
+            border-radius:15px;
+            color:#6F4E37;
+            font-size:12px;
+            font-weight:600;
+            ">
+            AI Model
+            </span>
+
+        </div>
+
+        <hr>
+
+        <p style="
+        text-align:center;
+        color:#777;
+        margin-bottom:5px;
+        ">
+        Hasil Prediksi
+        </p>
+
+        <h2 style="
+        text-align:center;
+        color:#3B2A1A;
+        margin-top:0;
+        margin-bottom:15px;
+        ">
+        {label}
+        </h2>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.metric(
+        "Confidence",
+        f"{confidence:.2f}%"
     )
+
+    st.progress(confidence/100)
+
+    confidence_badge(confidence)
+
+    st.markdown("### 🏅 Top-3 Prediksi")
+    top3_prediction(
+    prediction,
+    class_names
+)
 # ==========================================================
 # AUTOMATIC CONCLUSION
 # ==========================================================
