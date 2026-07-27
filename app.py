@@ -17,7 +17,7 @@ from pages.classify import classify_page
 
 st.set_page_config(
     page_title="Klasifikasi Citra Motif Batik",
-    page_icon="🧵",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
