@@ -1,3 +1,7 @@
+# ==========================================================
+# IMPORT LIBRARY
+# ==========================================================
+
 import os
 from PIL import Image
 import streamlit as st
@@ -10,16 +14,41 @@ from utils.components import (
     motif_table
 )
 
-# ==========================================================
-# PATH
-# ==========================================================
-
-SAMPLE_PATH = "assets/sample_dataset"
-PRIMARY_PATH = "assets/primer"
-
 
 # ==========================================================
-# DATA OVERVIEW PAGE
+# DATASET PATH
+# ==========================================================
+
+TRAIN_PATH = "data/DATASET/DATASET/TRAIN"
+TEST_PATH = "data/DATASET/DATASET/TEST"
+PRIMARY_PATH = "data/DATASET_PRIMER"
+
+
+# ==========================================================
+# COUNT IMAGE
+# ==========================================================
+
+def count_images(folder_path):
+
+    total = 0
+
+    if not os.path.exists(folder_path):
+        return 0
+
+    for root, _, files in os.walk(folder_path):
+
+        total += len([
+            f for f in files
+            if f.lower().endswith(
+                (".jpg", ".jpeg", ".png")
+            )
+        ])
+
+    return total
+
+
+# ==========================================================
+# OVERVIEW PAGE
 # ==========================================================
 
 def overview_page():
@@ -31,14 +60,11 @@ def overview_page():
         "Informasi dataset yang digunakan dalam penelitian."
     )
 
-    # ======================================================
-    # DATASET SUMMARY
-    # ======================================================
+    train_count = count_images(TRAIN_PATH)
+    test_count = count_images(TEST_PATH)
+    primary_count = count_images(PRIMARY_PATH)
 
-    total_count = 1370
-    train_count = 1050
-    test_count = 300
-    primary_count = 20
+    total_count = train_count + test_count + primary_count
 
     dataset_summary(
         total_count,
@@ -59,141 +85,284 @@ def overview_page():
 
     with col1:
 
-        st.markdown("""
-        <div class="card">
+        st.markdown(
+            """
+            <div class="card">
 
-        <h4>Dataset Sekunder</h4>
+            <h3>Dataset Sekunder</h3>
 
-        <b>Sumber</b><br>
-        Kaggle (2021)
-        <br>
+            <p><b>Sumber</b><br>
+            Kaggle (2021)</p>
 
-        <b>Jumlah Citra</b><br>
-        1.350 gambar
-        <br><br>
+            <p><b>Jumlah Citra</b><br>
+            1.350 gambar</p>
 
-        <b>Jumlah Kelas</b><br>
-        15 motif batik
-        <br><br>
+            <p><b>Jumlah Kelas</b><br>
+            15 motif batik Indonesia</p>
 
-        <b>Ukuran Citra</b><br>
-        224 × 224 piksel
-        </div>
-        """, unsafe_allow_html=True)
+            <p><b>Ukuran Citra</b><br>
+            224 × 224 piksel</p>
+
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
     with col2:
 
-        st.markdown(f"""
-        <div class="card">
+        st.markdown(
+            f"""
+            <div class="card">
 
-        <h4>Dataset Primer</h4>
+            <h3>Dataset Primer</h3>
 
-        <b>Sumber</b><br>
-        Dokumentasi Penelitian
-        <br><br>
+            <p><b>Sumber</b><br>
+            Dokumentasi Penelitian</p>
 
-        <b>Lokasi</b><br>
-        Museum Batik TMII
-        <br><br>
+            <p><b>Lokasi</b><br>
+            Museum Batik TMII</p>
 
-        <b>Jumlah Citra</b><br>
-        {primary_count} gambar
+            <p><b>Jumlah Citra</b><br>
+            {primary_count} gambar</p>
 
-        <br><br>
+            <p><b>Tahun Pengambilan</b><br>
+            2026</p>
 
-        <b>Tahun Pengambilan</b><br>
-        2026
-        </div>
-        """, unsafe_allow_html=True)
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-    # ======================================================
-    # CONTOH DATASET SEKUNDER
-    # ======================================================
+    st.divider()
+# ==========================================================
+# DATASET SEKUNDER GALLERY
+# ==========================================================
 
-    st.markdown("## 🖼 Contoh Dataset Sekunder")
+    st.markdown("## 🖼️ Contoh Dataset Sekunder")
 
     st.write(
-        "Berikut merupakan contoh citra dari masing-masing kelas motif batik "
-        "yang digunakan sebagai dataset sekunder dalam penelitian."
+        """
+        Berikut merupakan contoh citra pada dataset sekunder 
+        yang digunakan dalam proses pelatihan dan pengujian model.
+        Setiap kelas direpresentasikan oleh satu contoh citra.
+        """
     )
 
-    if os.path.exists(SAMPLE_PATH):
 
-        images = sorted([
-            img for img in os.listdir(SAMPLE_PATH)
-            if img.lower().endswith((".jpg", ".jpeg", ".png"))
+    if os.path.exists(TRAIN_PATH):
+
+        class_folders = sorted([
+
+            folder
+
+            for folder in os.listdir(TRAIN_PATH)
+
+            if os.path.isdir(
+                os.path.join(
+                    TRAIN_PATH,
+                    folder
+                )
+            )
+
         ])
+
 
         cols = st.columns(5)
 
-        for i, img_name in enumerate(images):
 
-            image = Image.open(
-                os.path.join(SAMPLE_PATH, img_name)
+        for i, folder in enumerate(class_folders):
+
+            folder_path = os.path.join(
+                TRAIN_PATH,
+                folder
             )
 
-            with cols[i % 5]:
 
-                st.image(
-                    image,
-                    use_container_width=True
+            images = sorted([
+
+                img
+
+                for img in os.listdir(folder_path)
+
+                if img.lower().endswith(
+                    (
+                        ".jpg",
+                        ".jpeg",
+                        ".png"
+                    )
                 )
 
-                st.caption(
-                    os.path.splitext(img_name)[0]
+            ])
+
+
+            if len(images) > 0:
+
+
+                img_path = os.path.join(
+
+                    folder_path,
+
+                    images[0]
+
                 )
+
+
+                image = Image.open(
+                    img_path
+                )
+
+
+                with cols[i % 5]:
+
+
+                    st.image(
+
+                        image,
+
+                        use_container_width=True
+
+                    )
+
+
+                    st.caption(
+
+                        folder
+
+                    )
+
 
     else:
 
-        st.warning("Folder sample_dataset tidak ditemukan.")
+        st.warning(
+            "Dataset sekunder tidak ditemukan."
+        )
 
-    # ======================================================
-    # DATASET PRIMER
-    # ======================================================
+
+
+# ==========================================================
+# DATASET PRIMER GALLERY
+# ==========================================================
 
     st.markdown("## 📷 Dataset Primer")
 
+
     st.write(
-        "Berikut merupakan citra primer yang diperoleh melalui pengambilan "
-        "gambar secara langsung di Museum Batik TMII."
+        """
+        Dataset primer merupakan citra batik yang diperoleh melalui
+        dokumentasi langsung di Museum Batik TMII.
+        Dataset ini digunakan sebagai data validasi untuk menguji
+        kemampuan generalisasi model terhadap citra dunia nyata.
+        """
     )
+
 
     if os.path.exists(PRIMARY_PATH):
 
-        images = sorted([
-            img for img in os.listdir(PRIMARY_PATH)
-            if img.lower().endswith((".jpg", ".jpeg", ".png"))
-        ])
 
-        cols = st.columns(4)
+        primary_images = sorted([
 
-        for i, img_name in enumerate(images):
+            img
 
-            img = Image.open(
-                os.path.join(PRIMARY_PATH, img_name)
-            )
+            for img in os.listdir(PRIMARY_PATH)
 
-            with cols[i % 4]:
+            if img.lower().endswith(
 
-                st.image(
-                    img,
-                    use_container_width=True
+                (
+                    ".jpg",
+                    ".jpeg",
+                    ".png"
                 )
 
-                st.caption(f"Citra Primer {i+1}")
+            )
+
+        ])
+
+
+
+        if len(primary_images) > 0:
+
+
+            cols = st.columns(5)
+
+
+            for i, img_name in enumerate(primary_images):
+
+
+                img_path = os.path.join(
+
+                    PRIMARY_PATH,
+
+                    img_name
+
+                )
+
+
+                image = Image.open(
+
+                    img_path
+
+                )
+
+
+                with cols[i % 5]:
+
+
+                    st.image(
+
+                        image,
+
+                        use_container_width=True
+
+                    )
+
+
+                    st.caption(
+
+                        img_name
+
+                    )
+
+
+
+        else:
+
+            st.info(
+                "Dataset primer belum memiliki gambar."
+            )
+
 
     else:
 
-        st.warning("Folder primer tidak ditemukan.")
+        st.warning(
+            "Folder dataset primer tidak ditemukan."
+        )
 
-    # ======================================================
-    # DAFTAR MOTIF BATIK
-    # ======================================================
 
-    st.markdown("## 📋 Daftar Motif Batik")
+
+# ==========================================================
+# MOTIF BATIK
+# ==========================================================
+
+    st.markdown(
+        "## 📋 Daftar Kelas Motif Batik"
+    )
+
+
+    st.write(
+        """
+        Dataset yang digunakan terdiri atas 15 kelas motif batik
+        Indonesia yang menjadi target klasifikasi model.
+        """
+    )
+
 
     motif_table()
 
-    st.write("")
+
+
+# ==========================================================
+# FOOTER
+# ==========================================================
 
     footer()
+    
