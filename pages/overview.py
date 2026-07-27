@@ -79,12 +79,12 @@ def overview_page():
     # DATASET INFORMATION
     # ======================================================
 
-    st.markdown("Dataset Penelitian")
+    st.markdown("## 📚 Dataset Penelitian")
 
     col1, col2 = st.columns(2)
 
     with col1:
-st.markdown("""
+        st.markdown("""
         <div class="card">
             <h4 style="margin-top: 0; margin-bottom: 8px;">Dataset Sekunder</h4>
             
@@ -107,10 +107,9 @@ st.markdown("""
         """, unsafe_allow_html=True)
 
     with col2:
-
         st.markdown(f"""
         <div class="card">
-            <h3 style="margin-top: 0; margin-bottom: 8px;">Dataset Primer</h3>
+            <h4 style="margin-top: 0; margin-bottom: 8px;">Dataset Primer</h4>
             
             <p style="margin-bottom: 8px; line-height: 1.2;">
                 <b>Sumber</b><br>Dokumentasi Penelitian
@@ -131,9 +130,10 @@ st.markdown("""
         """, unsafe_allow_html=True)
 
     st.divider()
-# ==========================================================
-# DATASET SEKUNDER GALLERY
-# ==========================================================
+
+    # ==========================================================
+    # DATASET SEKUNDER GALLERY
+    # ==========================================================
 
     st.markdown("## 🖼️ Contoh Dataset Sekunder")
 
@@ -145,27 +145,20 @@ st.markdown("""
         """
     )
 
-
     if os.path.exists(TRAIN_PATH):
 
         class_folders = sorted([
-
             folder
-
             for folder in os.listdir(TRAIN_PATH)
-
             if os.path.isdir(
                 os.path.join(
                     TRAIN_PATH,
                     folder
                 )
             )
-
         ])
 
-
         cols = st.columns(5)
-
 
         for i, folder in enumerate(class_folders):
 
@@ -174,13 +167,9 @@ st.markdown("""
                 folder
             )
 
-
             images = sorted([
-
                 img
-
                 for img in os.listdir(folder_path)
-
                 if img.lower().endswith(
                     (
                         ".jpg",
@@ -188,45 +177,29 @@ st.markdown("""
                         ".png"
                     )
                 )
-
             ])
-
 
             if len(images) > 0:
 
-
                 img_path = os.path.join(
-
                     folder_path,
-
                     images[0]
-
                 )
-
 
                 image = Image.open(
                     img_path
                 )
 
-
                 with cols[i % 5]:
 
-
                     st.image(
-
                         image,
-
                         use_container_width=True
-
                     )
-
 
                     st.caption(
-
                         folder
-
                     )
-
 
     else:
 
@@ -234,14 +207,11 @@ st.markdown("""
             "Dataset sekunder tidak ditemukan."
         )
 
-
-
-# ==========================================================
-# DATASET PRIMER GALLERY
-# ==========================================================
+    # ==========================================================
+    # DATASET PRIMER GALLERY
+    # ==========================================================
 
     st.markdown("## 📷 Dataset Primer")
-
 
     st.write(
         """
@@ -252,74 +222,45 @@ st.markdown("""
         """
     )
 
-
     if os.path.exists(PRIMARY_PATH):
 
-
         primary_images = sorted([
-
             img
-
             for img in os.listdir(PRIMARY_PATH)
-
             if img.lower().endswith(
-
                 (
                     ".jpg",
                     ".jpeg",
                     ".png"
                 )
-
             )
-
         ])
-
-
 
         if len(primary_images) > 0:
 
-
             cols = st.columns(5)
-
 
             for i, img_name in enumerate(primary_images):
 
-
                 img_path = os.path.join(
-
                     PRIMARY_PATH,
-
                     img_name
-
                 )
-
 
                 image = Image.open(
-
                     img_path
-
                 )
-
 
                 with cols[i % 5]:
 
-
                     st.image(
-
                         image,
-
                         use_container_width=True
-
                     )
-
 
                     st.caption(
-
                         img_name
-
                     )
-
-
 
         else:
 
@@ -327,23 +268,19 @@ st.markdown("""
                 "Dataset primer belum memiliki gambar."
             )
 
-
     else:
 
         st.warning(
             "Folder dataset primer tidak ditemukan."
         )
 
-
-
-# ==========================================================
-# MOTIF BATIK
-# ==========================================================
+    # ==========================================================
+    # MOTIF BATIK
+    # ==========================================================
 
     st.markdown(
         "## 📋 Daftar Kelas Motif Batik"
     )
-
 
     st.write(
         """
@@ -352,14 +289,10 @@ st.markdown("""
         """
     )
 
-
     motif_table()
 
-
-
-# ==========================================================
-# FOOTER
-# ==========================================================
+    # ==========================================================
+    # FOOTER
+    # ==========================================================
 
     footer()
-    
