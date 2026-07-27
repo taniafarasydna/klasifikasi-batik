@@ -2,7 +2,6 @@ import json
 import streamlit as st
 from PIL import Image
 
-from utils.styles import load_css
 from utils.components import (
     header,
     footer,
