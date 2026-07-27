@@ -64,22 +64,16 @@ def overview_page():
 
         <h4>Dataset Sekunder</h4>
 
-        <b>Sumber</b><br>
+        <b>Sumber</b>
         Kaggle (2021)
 
-        <br><br>
-
-        <b>Jumlah Citra</b><br>
+        <b>Jumlah Citra</b>
         1.350 gambar
 
-        <br><br>
-
-        <b>Jumlah Kelas</b><br>
+        <b>Jumlah Kelas</b>
         15 motif batik
 
-        <br><br>
-
-        <b>Ukuran Citra</b><br>
+        <b>Ukuran Citra</b>
         224 × 224 piksel
 
         </div>
@@ -92,22 +86,16 @@ def overview_page():
 
         <h4>Dataset Primer</h4>
 
-        <b>Sumber</b><br>
+        <b>Sumber</b>
         Dokumentasi Penelitian
 
-        <br><br>
-
-        <b>Lokasi</b><br>
+        <b>Lokasi</b>
         Museum Batik TMII
-
-        <br><br>
-
-        <b>Jumlah Citra</b><br>
+        
+        <b>Jumlah Citra</b>
         {primary_count} gambar
-
-        <br><br>
-
-        <b>Tahun Pengambilan</b><br>
+        
+        <b>Tahun Pengambilan</b>
         2026
 
         </div>
