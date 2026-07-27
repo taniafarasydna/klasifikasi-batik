@@ -11,35 +11,11 @@ from utils.components import (
 )
 
 # ==========================================================
-# PATH DATASET
+# PATH
 # ==========================================================
 
-TRAIN_PATH = "data/DATASET/DATASET/TRAIN"
-TEST_PATH = "data/DATASET/DATASET/TEST"
-PRIMARY_PATH = "data/DATASET_PRIMER"
-
-
-# ==========================================================
-# COUNT IMAGES
-# ==========================================================
-
-def count_images(folder_path):
-
-    total = 0
-
-    if not os.path.exists(folder_path):
-        return 0
-
-    for root, _, files in os.walk(folder_path):
-
-        total += len([
-            f for f in files
-            if f.lower().endswith(
-                (".jpg", ".jpeg", ".png")
-            )
-        ])
-
-    return total
+SAMPLE_PATH = "assets/sample_dataset"
+PRIMARY_PATH = "assets/primer"
 
 
 # ==========================================================
@@ -55,13 +31,14 @@ def overview_page():
         "Informasi dataset yang digunakan dalam penelitian."
     )
 
-    train_count = count_images(TRAIN_PATH)
+    # ======================================================
+    # DATASET SUMMARY
+    # ======================================================
 
-    test_count = count_images(TEST_PATH)
-
-    primary_count = count_images(PRIMARY_PATH)
-
-    total_count = train_count + test_count + primary_count
+    total_count = 1370
+    train_count = 1050
+    test_count = 300
+    primary_count = 20
 
     dataset_summary(
         total_count,
@@ -71,6 +48,7 @@ def overview_page():
     )
 
     st.write("")
+
     # ======================================================
     # DATASET INFORMATION
     # ======================================================
@@ -101,7 +79,7 @@ def overview_page():
 
         <br><br>
 
-        <b>Ukuran</b><br>
+        <b>Ukuran Citra</b><br>
         224 × 224 piksel
 
         </div>
@@ -134,48 +112,48 @@ def overview_page():
 
         </div>
         """, unsafe_allow_html=True)
+
     # ======================================================
     # CONTOH DATASET SEKUNDER
     # ======================================================
 
     st.markdown("## 🖼 Contoh Dataset Sekunder")
 
-    if os.path.exists(TRAIN_PATH):
+    st.write(
+        "Berikut merupakan contoh citra dari masing-masing kelas motif batik "
+        "yang digunakan sebagai dataset sekunder dalam penelitian."
+    )
 
-        class_folders = sorted([
-            folder for folder in os.listdir(TRAIN_PATH)
-            if os.path.isdir(os.path.join(TRAIN_PATH, folder))
+    if os.path.exists(SAMPLE_PATH):
+
+        images = sorted([
+            img for img in os.listdir(SAMPLE_PATH)
+            if img.lower().endswith((".jpg", ".jpeg", ".png"))
         ])
 
         cols = st.columns(5)
 
-        for i, folder in enumerate(class_folders):
+        for i, img_name in enumerate(images):
 
-            folder_path = os.path.join(TRAIN_PATH, folder)
+            image = Image.open(
+                os.path.join(SAMPLE_PATH, img_name)
+            )
 
-            images = sorted([
-                img for img in os.listdir(folder_path)
-                if img.lower().endswith((".jpg", ".jpeg", ".png"))
-            ])
+            with cols[i % 5]:
 
-            if images:
-
-                image = Image.open(
-                    os.path.join(folder_path, images[0])
+                st.image(
+                    image,
+                    use_container_width=True
                 )
 
-                with cols[i % 5]:
-
-                    st.image(
-                        image,
-                        use_container_width=True
-                    )
-
-                    st.caption(folder)
+                st.caption(
+                    os.path.splitext(img_name)[0]
+                )
 
     else:
 
-        st.warning("Folder dataset sekunder tidak ditemukan.")
+        st.warning("Folder sample_dataset tidak ditemukan.")
+
     # ======================================================
     # DATASET PRIMER
     # ======================================================
@@ -183,111 +161,38 @@ def overview_page():
     st.markdown("## 📷 Dataset Primer")
 
     st.write(
-        "Berikut merupakan citra primer yang diperoleh melalui "
-        "pengambilan gambar secara langsung di Museum Batik TMII."
+        "Berikut merupakan citra primer yang diperoleh melalui pengambilan "
+        "gambar secara langsung di Museum Batik TMII."
     )
 
     if os.path.exists(PRIMARY_PATH):
 
         images = sorted([
-
             img for img in os.listdir(PRIMARY_PATH)
-
-            if img.lower().endswith(
-
-                (".jpg", ".jpeg", ".png")
-
-            )
-
+            if img.lower().endswith((".jpg", ".jpeg", ".png"))
         ])
 
-        cols = st.columns(5)
+        cols = st.columns(4)
 
         for i, img_name in enumerate(images):
 
             img = Image.open(
-
-                os.path.join(
-
-                    PRIMARY_PATH,
-
-                    img_name
-
-                )
-
+                os.path.join(PRIMARY_PATH, img_name)
             )
 
-            with cols[i % 5]:
+            with cols[i % 4]:
 
                 st.image(
-
                     img,
-
                     use_container_width=True
-
                 )
 
-                st.caption(img_name)
+                st.caption(f"Citra Primer {i+1}")
 
     else:
 
-        st.warning("Folder dataset primer tidak ditemukan.")
-    # ======================================================
-    # DATASET PRIMER
-    # ======================================================
+        st.warning("Folder primer tidak ditemukan.")
 
-    st.markdown("## 📷 Dataset Primer")
-
-    st.write(
-        "Berikut merupakan citra primer yang diperoleh melalui "
-        "pengambilan gambar secara langsung di Museum Batik TMII."
-    )
-
-    if os.path.exists(PRIMARY_PATH):
-
-        images = sorted([
-
-            img for img in os.listdir(PRIMARY_PATH)
-
-            if img.lower().endswith(
-
-                (".jpg", ".jpeg", ".png")
-
-            )
-
-        ])
-
-        cols = st.columns(5)
-
-        for i, img_name in enumerate(images):
-
-            img = Image.open(
-
-                os.path.join(
-
-                    PRIMARY_PATH,
-
-                    img_name
-
-                )
-
-            )
-
-            with cols[i % 5]:
-
-                st.image(
-
-                    img,
-
-                    use_container_width=True
-
-                )
-
-                st.caption(img_name)
-
-    else:
-
-        st.warning("Folder dataset primer tidak ditemukan.")
     # ======================================================
     # DAFTAR MOTIF BATIK
     # ======================================================
