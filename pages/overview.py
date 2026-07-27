@@ -66,7 +66,7 @@ def overview_page():
 
         <b>Sumber</b><br>
         Kaggle (2021)
-        <br><br>
+        <br>
 
         <b>Jumlah Citra</b><br>
         1.350 gambar
