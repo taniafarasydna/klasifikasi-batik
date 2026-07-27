@@ -40,7 +40,7 @@ with st.sidebar:
         """
         <div style="text-align:center; padding:10px 0 20px 0;">
             <h2 style="margin-bottom:5px;color:#6F4E37;">
-                🧵 Batik Classifier
+                Batik Classifier
             </h2>
 
             <p style="
