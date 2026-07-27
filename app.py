@@ -6,8 +6,8 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 from utils.styles import load_css
-from pages.overview import overview_page
-from pages.classify import classify_page
+from views.overview import overview_page
+from views.classify import classify_page
 
 # ==========================================================
 # PAGE CONFIGURATION
