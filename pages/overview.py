@@ -84,54 +84,51 @@ def overview_page():
     col1, col2 = st.columns(2)
 
     with col1:
-
-        st.markdown(
-            """
-            <div class="card">
-
-            <h3>Dataset Sekunder</h3>
-
-            <p><b>Sumber</b>
-            Kaggle (2021)</p>
-
-            <b>Jumlah Citra</b>
-            1.350 gambar
-
-            <p><b>Jumlah Kelas</b>
-            15 motif batik Indonesia</p>
-
-            <p><b>Ukuran Citra</b>
-            224 × 224 piksel</p>
-
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+st.markdown("""
+        <div class="card">
+            <h4 style="margin-top: 0; margin-bottom: 8px;">Dataset Sekunder</h4>
+            
+            <p style="margin-bottom: 8px; line-height: 1.2;">
+                <b>Sumber</b><br>Kaggle (2021)
+            </p>
+            
+            <p style="margin-bottom: 8px; line-height: 1.2;">
+                <b>Jumlah Citra</b><br>1.350 gambar
+            </p>
+            
+            <p style="margin-bottom: 8px; line-height: 1.2;">
+                <b>Jumlah Kelas</b><br>15 motif batik
+            </p>
+            
+            <p style="margin-bottom: 0px; line-height: 1.2;">
+                <b>Ukuran Citra</b><br>224 × 224 piksel
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
 
-        st.markdown(
-            f"""
-            <div class="card">
-
-            <h3>Dataset Primer</h3>
-
-            <p><b>Sumber</b><br>
-            Dokumentasi Penelitian</p>
-
-            <p><b>Lokasi</b><br>
-            Museum Batik TMII</p>
-
-            <p><b>Jumlah Citra</b><br>
-            {primary_count} gambar</p>
-
-            <p><b>Tahun Pengambilan</b><br>
-            2026</p>
-
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+        st.markdown(f"""
+        <div class="card">
+            <h4 style="margin-top: 0; margin-bottom: 8px;">Dataset Primer</h4>
+            
+            <p style="margin-bottom: 8px; line-height: 1.2;">
+                <b>Sumber</b><br>Dokumentasi Penelitian
+            </p>
+            
+            <p style="margin-bottom: 8px; line-height: 1.2;">
+                <b>Lokasi</b><br>Museum Batik TMII
+            </p>
+            
+            <p style="margin-bottom: 8px; line-height: 1.2;">
+                <b>Jumlah Citra</b><br>{primary_count} gambar
+            </p>
+            
+            <p style="margin-bottom: 0px; line-height: 1.2;">
+                <b>Tahun Pengambilan</b><br>2026
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.divider()
 # ==========================================================
