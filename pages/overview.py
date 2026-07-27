@@ -53,7 +53,7 @@ def overview_page():
     # DATASET INFORMATION
     # ======================================================
 
-    st.markdown("## 📚 Dataset Penelitian")
+    st.markdown("## Dataset Penelitian")
 
     col1, col2 = st.columns(2)
 
@@ -117,7 +117,7 @@ def overview_page():
     # CONTOH DATASET SEKUNDER
     # ======================================================
 
-    st.markdown("## 🖼 Contoh Dataset Sekunder")
+    st.markdown("## Contoh Dataset Sekunder")
 
     st.write(
         "Berikut merupakan contoh citra dari masing-masing kelas motif batik "
@@ -158,7 +158,7 @@ def overview_page():
     # DATASET PRIMER
     # ======================================================
 
-    st.markdown("## 📷 Dataset Primer")
+    st.markdown("## Dataset Primer")
 
     st.write(
         "Berikut merupakan citra primer yang diperoleh melalui pengambilan "
@@ -197,7 +197,7 @@ def overview_page():
     # DAFTAR MOTIF BATIK
     # ======================================================
 
-    st.markdown("## 📋 Daftar Motif Batik")
+    st.markdown("## Daftar Motif Batik")
 
     motif_table()
 
