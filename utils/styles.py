@@ -3,433 +3,704 @@ import streamlit as st
 # ==========================================================
 # LOAD CSS
 # ==========================================================
+
 def load_css():
 
     st.markdown("""
-    <style>
+<style>
 
-    /* =====================================================
-       IMPORT FONT
-    ===================================================== */
+/* =====================================================
+GOOGLE FONT
+===================================================== */
 
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-    html, body, [class*="css"]{
-        font-family: 'Poppins', sans-serif;
-    }
 
-    /* =====================================================
-       COLOR PALETTE
-    ===================================================== */
+html,
+body,
+[class*="css"],
+[data-testid="stAppViewContainer"]{
 
-    :root{
+    font-family:'Poppins',sans-serif;
 
-        --primary:#D7B899;
-        --secondary:#8B6B4A;
-        --background:#F8F5F1;
-        --white:#FFFFFF;
-        --text:#2F2F2F;
-        --border:#E5D6C7;
-        --hover:#EFE2D4;
+}
 
-    }
 
-    /* =====================================================
-       BACKGROUND
-    ===================================================== */
+/* =====================================================
+BACKGROUND
+===================================================== */
 
-    .stApp{
+.stApp{
 
-        background-color:var(--background);
+    background:#F7F3EF;
 
-    }
+}
 
-    /* =====================================================
-       HIDE DEFAULT STREAMLIT
-    ===================================================== */
 
-    #MainMenu{
-        visibility:hidden;
-    }
+/* =====================================================
+REMOVE STREAMLIT DEFAULT
+===================================================== */
 
-    footer{
-        visibility:hidden;
-    }
+#MainMenu{
 
-    header{
-        visibility:hidden;
-    }
+    visibility:hidden;
 
-    /* =====================================================
-       HEADER
-    ===================================================== */
+}
 
-    .header{
+footer{
 
-    background:linear-gradient(
-        90deg,
-        #D7B899,
-        #E8D6C3
-    );
+    visibility:hidden;
 
-    padding:28px;
+}
+
+header{
+
+    visibility:hidden;
+
+}
+
+
+/* =====================================================
+SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#EFE5DA;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#B68D5B;
 
     border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#8B6B4A;
+
+}
+
+
+/* =====================================================
+SIDEBAR
+===================================================== */
+
+section[data-testid="stSidebar"]{
+
+    background:#EFE2D4;
+
+    border-right:2px solid #DDC7AA;
+
+}
+
+section[data-testid="stSidebar"] *{
+
+    color:#5B4634;
+
+}
+
+section[data-testid="stSidebar"] hr{
+
+    border:1px solid #D4BEA5;
+
+}
+
+
+/* =====================================================
+HEADER
+===================================================== */
+
+.header{
+
+    background:linear-gradient(
+    135deg,
+    #D8B892,
+    #F1E5D8
+    );
+
+    border-radius:25px;
+
+    padding:35px;
 
     text-align:center;
 
     margin-bottom:35px;
 
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
 }
 
-    .header h1{
+
+.header h1{
 
     margin:0;
 
-    color:#3B2A1A;
+    font-size:42px;
 
-    font-size:38px;
+    color:#49311F;
 
-    font-weight:700;
+    font-weight:800;
 
     letter-spacing:2px;
 
 }
 
-    /* =====================================================
-       SECTION TITLE
-    ===================================================== */
 
-    .section-title{
+.header p{
 
-        font-size:28px;
+    margin-top:15px;
 
-        font-weight:700;
+    color:#654C35;
 
-        color:#5E4631;
+    font-size:18px;
 
-        margin-top:10px;
+    line-height:1.7;
 
-    }
+}
 
-    .section-subtitle{
 
-        color:#777;
+/* =====================================================
+SECTION TITLE
+===================================================== */
 
-        font-size:16px;
+.section-title{
 
-        margin-bottom:20px;
+    font-size:30px;
 
-    }
+    font-weight:700;
 
-    /* =====================================================
-       CARD
-    ===================================================== */
+    color:#6B4B2E;
 
-    .card{
+    margin-top:5px;
 
-        background:white;
+}
 
-        border-radius:18px;
 
-        padding:22px;
+.section-subtitle{
 
-        border:1px solid var(--border);
+    color:#7A7A7A;
 
-        box-shadow:0px 4px 12px rgba(0,0,0,.06);
+    font-size:16px;
 
-        margin-bottom:20px;
+    margin-bottom:25px;
 
-    }
+}
 
-    /* =====================================================
-       DATASET CARD
-    ===================================================== */
-    .dataset-card{
 
-        background:white;
+/* =====================================================
+CARD
+===================================================== */
 
-        border-radius:20px;
+.card{
 
-        padding:25px;
+    background:white;
 
-        text-align:center;
+    border-radius:18px;
 
-        border:1px solid #E5D6C7;
+    padding:22px;
 
-        box-shadow:0 6px 15px rgba(0,0,0,.05);
+    border:1px solid #E4D5C7;
 
-        transition:all .3s ease;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
 
-        height:170px;
+    transition:.30s;
 
-    }
+    margin-bottom:20px;
 
+}
+
+.card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 15px 28px rgba(0,0,0,.09);
+
+}
+
+
+/* =====================================================
+DATASET CARD
+===================================================== */
+
+.dataset-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    text-align:center;
+
+    border:1px solid #E5D8CA;
+
+    box-shadow:0 6px 20px rgba(0,0,0,.05);
+
+    transition:.3s;
+
+    height:180px;
+
+}
 .dataset-card:hover{
 
-    transform:translateY(-6px);
+    transform:translateY(-8px);
 
-    box-shadow:0 12px 24px rgba(0,0,0,.10);
+    box-shadow:0 15px 30px rgba(0,0,0,.10);
 
 }
 
 .dataset-card h2{
 
+    margin:10px 0 5px 0;
+
     font-size:40px;
 
     color:#8B6B4A;
 
-    margin-bottom:8px;
+    font-weight:700;
 
 }
 
-    /* =====================================================
-       RESULT CARD
-    ===================================================== */
+.dataset-card p{
 
-    .result-card{
+    color:#666;
 
-        background:white;
+    font-size:15px;
 
-        border-left:7px solid #8B6B4A;
+}
 
-        border-radius:16px;
 
-        padding:18px;
+/* =====================================================
+RESULT CARD
+===================================================== */
 
-        box-shadow:0px 4px 12px rgba(0,0,0,.08);
+.result-card{
 
-        margin-bottom:10px;
+    background:#FFFFFF;
+
+    border-radius:22px;
+
+    padding:28px;
+
+    border-left:8px solid #8B6B4A;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    transition:.30s;
+
+    margin-bottom:20px;
+
+}
+
+.result-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+}
+
+.result-card h3{
+
+    margin-top:0;
+
+    color:#8B6B4A;
+
+    text-align:center;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+.result-card h2{
+
+    margin-top:10px;
+
+    text-align:center;
+
+    color:#3D2D1F;
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+
+/* =====================================================
+BUTTON
+===================================================== */
+
+.stButton>button{
+
+    width:100%;
+
+    background:#8B6B4A;
+
+    color:white;
+
+    border:none;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.stButton>button:hover{
+
+    background:#6F4E37;
+
+    transform:scale(1.02);
+
+}
+
+
+/* =====================================================
+UPLOAD
+===================================================== */
+
+section[data-testid="stFileUploader"]{
+
+    border:3px dashed #C49A6C;
+
+    border-radius:20px;
+
+    background:#FFFDFB;
+
+    padding:18px;
+
+}
+
+
+/* =====================================================
+IMAGE
+===================================================== */
+
+img{
+
+    border-radius:16px;
+
+}
+
+
+/* =====================================================
+DATAFRAME
+===================================================== */
+
+thead tr th{
+
+    background:#D7B899 !important;
+
+    color:#3D2D1F !important;
+
+}
+
+tbody tr:hover{
+
+    background:#F6EFE7 !important;
+
+}
+
+
+/* =====================================================
+PROGRESS BAR
+===================================================== */
+
+.stProgress > div > div > div > div{
+
+    background:#8B6B4A;
+
+}
+
+
+/* =====================================================
+METRIC
+===================================================== */
+
+div[data-testid="metric-container"]{
+
+    border-radius:18px;
+
+    border:1px solid #E6D8CA;
+
+    background:white;
+
+    padding:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.05);
+
+}
+
+
+/* =====================================================
+GALLERY
+===================================================== */
+
+.gallery-image{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:12px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.05);
+
+    transition:.30s;
+
+}
+
+.gallery-image:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.10);
+
+}
+
+.gallery-image img{
+
+    border-radius:14px;
+
+}
+/* =====================================================
+SUCCESS - INFO - WARNING - ERROR
+===================================================== */
+
+div[data-testid="stAlert"]{
+
+    border-radius:16px;
+
+    border:none;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.05);
+
+}
+
+
+/* =====================================================
+FOOTER
+===================================================== */
+
+.footer{
+
+    margin-top:60px;
+
+    background:linear-gradient(
+        135deg,
+        #D8B892,
+        #EEDCC9
+    );
+
+    border-radius:22px;
+
+    padding:28px;
+
+    text-align:center;
+
+    color:#3D2D1F;
+
+    line-height:1.9;
+
+    box-shadow:0 -5px 18px rgba(0,0,0,.06);
+
+}
+
+.footer b{
+
+    color:#3D2D1F;
+
+}
+
+
+/* =====================================================
+HORIZONTAL LINE
+===================================================== */
+
+hr{
+
+    border:none;
+
+    border-top:1px solid #E5D8CA;
+
+    margin-top:15px;
+
+    margin-bottom:15px;
+
+}
+
+
+/* =====================================================
+PROGRESS TEXT
+===================================================== */
+
+.stMarkdown{
+
+    color:#2F2F2F;
+
+}
+
+
+/* =====================================================
+IMAGE CAPTION
+===================================================== */
+
+figcaption{
+
+    text-align:center !important;
+
+    font-weight:500;
+
+    color:#6B4B2E !important;
+
+    padding-top:8px;
+
+}
+
+
+/* =====================================================
+ANIMATION
+===================================================== */
+
+.main{
+
+    animation:fadeIn .5s ease;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(15px);
 
     }
 
-    .result-card h3{
+    to{
 
-        color:#8B6B4A;
+        opacity:1;
 
-        margin-bottom:8px;
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* =====================================================
+RESPONSIVE
+===================================================== */
+
+@media (max-width:900px){
+
+    .header{
+
+        padding:22px;
+
+    }
+
+    .header h1{
+
+        font-size:30px;
+
+        letter-spacing:1px;
+
+    }
+
+    .header p{
+
+        font-size:15px;
+
+    }
+
+    .section-title{
+
+        font-size:24px;
+
+    }
+
+    .dataset-card{
+
+        height:auto;
+
+        padding:20px;
+
+    }
+
+    .dataset-card h2{
+
+        font-size:32px;
+
+    }
+
+    .result-card{
+
+        padding:18px;
 
     }
 
     .result-card h2{
 
-        margin-top:0;
-
-        font-size:28px;
-
-        color:#2F2F2F;
+        font-size:26px;
 
     }
-
-    /* =====================================================
-       BUTTON
-    ===================================================== */
-
-    .stButton>button{
-
-        width:100%;
-
-        background:#8B6B4A;
-
-        color:white;
-
-        border:none;
-
-        border-radius:10px;
-
-        padding:12px;
-
-        font-weight:600;
-
-    }
-
-    .stButton>button:hover{
-
-        background:#6F5439;
-
-        color:white;
-
-    }
-
-    /* =====================================================
-       FILE UPLOADER
-    ===================================================== */
-
-    section[data-testid="stFileUploader"]{
-
-        background:white;
-
-        border-radius:15px;
-
-        border:2px dashed #CDB79E;
-
-        padding:15px;
-
-    }
-
-    /* =====================================================
-       SIDEBAR
-    ===================================================== */
-
-    section[data-testid="stSidebar"]{
-
-        background:#EFE2D4;
-
-    }
-
-    section[data-testid="stSidebar"] *{
-
-        color:#3D2F21;
-
-    }
-
-    /* =====================================================
-       TABLE
-    ===================================================== */
-
-    thead tr th{
-
-        background:#D7B899 !important;
-
-        color:black !important;
-
-    }
-
-    /* =====================================================
-       METRIC
-    ===================================================== */
-
-    div[data-testid="metric-container"]{
-
-        border-radius:15px;
-
-        border:1px solid var(--border);
-
-        background:white;
-
-        padding:12px;
-
-    }
-
-    /* =====================================================
-       IMAGE
-    ===================================================== */
-
-    img{
-
-        border-radius:12px;
-
-    }
-
-    /* =====================================================
-       PROGRESS BAR
-    ===================================================== */
-
-    .stProgress > div > div > div > div{
-
-        background:#8B6B4A;
-
-    }
-
-    /* =====================================================
-       FOOTER
-    ===================================================== */
-
-    .footer{
-
-        background:#D7B899;
-
-        margin-top:50px;
-
-        padding:20px;
-
-        border-radius:15px;
-
-        text-align:center;
-
-        color:black;
-
-        line-height:1.8;
-
-        box-shadow:0px -2px 10px rgba(0,0,0,.05);
-
-    }
-
-    /* =====================================================
-       ANIMATION
-    ===================================================== */
-
-    .main{
-
-        animation:fadeIn .5s ease;
-
-    }
-
-    @keyframes fadeIn{
-
-        from{
-
-            opacity:0;
-
-            transform:translateY(8px);
-
-        }
-
-        to{
-
-            opacity:1;
-
-            transform:translateY(0);
-
-        }
-
-    }
-
-/* ===============================
-IMAGE GALLERY
-=============================== */
-
-.gallery-image img{
-
-    border-radius:15px;
-
-    border:2px solid #DDD;
-
-    transition:.3s;
 
 }
 
-.gallery-image img:hover{
 
-    transform:scale(1.03);
+/* =====================================================
+OPTION MENU
+===================================================== */
 
-}
+.nav-link{
 
-/* ===============================
-UPLOAD BOX
-=============================== */
+    border-radius:12px !important;
 
-section[data-testid="stFileUploader"]{
-
-    border:3px dashed #B9936C;
-
-    border-radius:18px;
-
-    background:#FFFDFB;
+    transition:.25s;
 
 }
 
-/* ===============================
-SIDEBAR
-=============================== */
+.nav-link:hover{
 
-section[data-testid="stSidebar"]{
-
-    border-right:2px solid #D8C2A8;
+    transform:translateX(4px);
 
 }
-                
-    </style>
 
-    """, unsafe_allow_html=True)
+
+/* =====================================================
+REMOVE EXCESS PADDING
+===================================================== */
+
+.block-container{
+
+    padding-top:2rem;
+
+    padding-bottom:2rem;
+
+}
+
+
+/* =====================================================
+END
+===================================================== */
+
+</style>
