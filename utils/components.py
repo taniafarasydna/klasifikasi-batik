@@ -8,74 +8,59 @@ import numpy as np
 # ==========================================================
 
 def header():
-
     st.markdown(
         """
         <div class="header">
-
-            <h1>🧵 KLASIFIKASI CITRA MOTIF BATIK</h1>
-
+            <h1>KLASIFIKASI CITRA MOTIF BATIK</h1>
             <p>
             Sistem klasifikasi motif batik Indonesia menggunakan
             <b>Transfer Learning MobileNetV2 & MobileNetV3</b>
             </p>
-
         </div>
         """,
         unsafe_allow_html=True
     )
-
 
 # ==========================================================
 # FOOTER
 # ==========================================================
 
 def footer():
-
     st.markdown(
         """
         <div class="footer">
-
             <h4 style="margin-bottom:10px;">
                 Klasifikasi Citra Motif Batik Indonesia
             </h4>
-
             <p style="margin:0;">
                 Transfer Learning MobileNetV2 & MobileNetV3
             </p>
-
             <br>
-
             <p style="margin:0;">
                 <b>Tania Fara Sayyidina</b><br>
                 202210715156
             </p>
-
         </div>
         """,
         unsafe_allow_html=True
     )
-
 
 # ==========================================================
 # SECTION TITLE
 # ==========================================================
 
 def section_title(title, subtitle=""):
-
     st.markdown(
         f"""
         <div class="section-title">
             {title}
         </div>
-
         <div class="section-subtitle">
             {subtitle}
         </div>
         """,
         unsafe_allow_html=True
     )
-
 
 # ==========================================================
 # DATASET SUMMARY
@@ -84,35 +69,22 @@ def section_title(title, subtitle=""):
 def dataset_summary(total, classes, train, test):
 
     data = [
-
-        ("🖼️", total, "Total Citra"),
-
-        ("🎨", classes, "Jumlah Kelas"),
-
-        ("📚", train, "Data Latih"),
-
-        ("🧪", test, "Data Uji")
-
+        (, total, "Total Citra"),
+        (, classes, "Jumlah Kelas"),
+        (, train, "Data Latih"),
+        (, test, "Data Uji")
     ]
 
     cols = st.columns(4)
-
     for col, item in zip(cols, data):
-
         icon, value, title = item
-
         with col:
-
             st.markdown(
                 f"""
                 <div class="dataset-card">
-
                     <h1>{icon}</h1>
-
                     <h2>{value}</h2>
-
                     <p>{title}</p>
-
                 </div>
                 """,
                 unsafe_allow_html=True
@@ -120,45 +92,34 @@ def dataset_summary(total, classes, train, test):
 # ==========================================================
 # MOTIF TABLE
 # ==========================================================
-
 def motif_table():
-
     motif = [
-
-        "Bali",
-        "Betawi",
-        "Cendrawasih",
-        "Dayak",
-        "Geblek Renteng",
-        "Ikat Celup",
-        "Insang",
-        "Kawung",
-        "Lasem",
-        "Megamendung",
-        "Pala",
-        "Parang",
-        "Poleng",
-        "Sekar Jagad",
-        "Tambal"
-
+        "Batik Bali",
+        "Batik Betawi",
+        "Batik Cendrawasih",
+        "Batik Dayak",
+        "Batik Geblek Renteng",
+        "Batik Ikat Celup",
+        "Batik Insang",
+        "Batik Kawung",
+        "Batik Lasem",
+        "Batik Megamendung",
+        "Batik Pala",
+        "Batik Parang",
+        "Batik Poleng",
+        "Batik Sekar Jagad",
+        "Batik Tambal"
     ]
 
     df = pd.DataFrame({
-
         "No": np.arange(1, len(motif)+1),
-
         "Motif Batik": motif
-
     })
 
     st.dataframe(
-
         df,
-
         hide_index=True,
-
         use_container_width=True
-
     )
 
 
@@ -167,36 +128,23 @@ def motif_table():
 # ==========================================================
 
 def confidence_badge(confidence):
-
     if confidence >= 95:
-
         st.success("🟢 Confidence Sangat Tinggi")
-
     elif confidence >= 80:
-
         st.info("🔵 Confidence Tinggi")
-
     elif confidence >= 60:
-
         st.warning("🟠 Confidence Sedang")
-
     else:
-
         st.error("🔴 Confidence Rendah")
-
 
 # ==========================================================
 # TOP 3 PREDICTION
 # ==========================================================
 
 def top3_prediction(prediction, class_names):
-
     top3_index = np.argsort(prediction)[::-1][:3]
-
     for rank, idx in enumerate(top3_index, start=1):
-
         confidence = prediction[idx] * 100
-
         st.write(
             f"**#{rank}. {class_names[idx]}**"
         )
@@ -206,52 +154,32 @@ def top3_prediction(prediction, class_names):
         st.caption(
             f"{confidence:.2f}%"
         )
-
-
+        
 # ==========================================================
 # PREDICTION SUMMARY
 # ==========================================================
 
 def prediction_summary(result_v2, result_v3):
-
     st.markdown("## 📊 Ringkasan Prediksi")
-
     df = pd.DataFrame({
-
         "Model":[
-
             "MobileNetV2",
-
             "MobileNetV3"
-
         ],
-
         "Hasil Prediksi":[
-
             result_v2["label"],
-
             result_v3["label"]
-
         ],
-
         "Confidence (%)":[
-
             f'{result_v2["confidence"]:.2f}%',
-
             f'{result_v3["confidence"]:.2f}%'
-
         ]
-
     })
 
     st.dataframe(
-
         df,
-
         hide_index=True,
-
         use_container_width=True
-
     )
 # ==========================================================
 # PREDICTION CARD
@@ -264,25 +192,21 @@ def prediction_card(
     prediction,
     class_names
 ):
-
     st.markdown(
         f"""
         <div class="result-card">
-
             <div style="
                 display:flex;
                 justify-content:space-between;
                 align-items:center;
                 margin-bottom:10px;
             ">
-
                 <h3 style="
                     margin:0;
                     color:#6F4E37;
                 ">
-                    🤖 {model_name}
+                    {model_name}
                 </h3>
-
                 <span style="
                     background:#EFE2D4;
                     padding:6px 12px;
@@ -293,11 +217,8 @@ def prediction_card(
                 ">
                     AI Model
                 </span>
-
             </div>
-
             <hr>
-
             <p style="
                 text-align:center;
                 color:#888;
@@ -305,7 +226,6 @@ def prediction_card(
             ">
                 Hasil Prediksi
             </p>
-
             <h2 style="
                 text-align:center;
                 color:#3B2A1A;
@@ -314,7 +234,6 @@ def prediction_card(
             ">
                 {label}
             </h2>
-
         </div>
         """,
         unsafe_allow_html=True
@@ -324,17 +243,13 @@ def prediction_card(
         "Confidence",
         f"{confidence:.2f}%"
     )
-
     st.progress(
         confidence / 100
     )
-
     confidence_badge(
         confidence
     )
-
     st.markdown("#### 🏅 Top-3 Prediksi")
-
     top3_prediction(
         prediction,
         class_names
