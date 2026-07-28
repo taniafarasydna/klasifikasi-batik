@@ -207,16 +207,6 @@ def prediction_card(
                 ">
                     {model_name}
                 </h3>
-                <span style="
-                    background:#EFE2D4;
-                    padding:6px 12px;
-                    border-radius:20px;
-                    font-size:12px;
-                    font-weight:600;
-                    color:#6F4E37;
-                ">
-                    AI Model
-                </span>
             </div>
             <hr>
             <p style="
