@@ -69,10 +69,10 @@ def section_title(title, subtitle=""):
 def dataset_summary(total, classes, train, test):
 
     data = [
-        (, total, "Total Citra"),
-        (, classes, "Jumlah Kelas"),
-        (, train, "Data Latih"),
-        (, test, "Data Uji")
+        ("", total, "Total Citra"),
+        ("", classes, "Jumlah Kelas"),
+        ("", train, "Data Latih"),
+        ("", test, "Data Uji")
     ]
 
     cols = st.columns(4)
@@ -286,4 +286,4 @@ kesepakatan terhadap hasil klasifikasi citra tersebut.
 Perbedaan ini menunjukkan bahwa kedua model memiliki tingkat keyakinan
 yang berbeda terhadap citra yang diuji.
 """
-        )
+    )
